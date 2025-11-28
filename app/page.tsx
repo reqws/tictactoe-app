@@ -48,40 +48,74 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-zinc-100 via-zinc-200 to-zinc-300 dark:from-black dark:via-zinc-900 dark:to-zinc-800 text-black dark:text-white transition-colors duration-500">
-      <h1 className="text-5xl font-extrabold mb-8 tracking-tight text-blue-700 dark:text-blue-400 drop-shadow-md">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-br from-zinc-100 via-zinc-200 to-zinc-300 dark:from-black dark:via-zinc-900 dark:to-zinc-800 text-black dark:text-white transition-all duration-700 ease-out px-4">
+
+      <h1 className="text-6xl font-extrabold mb-10 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-blue-400 dark:from-blue-400 dark:to-sky-300 drop-shadow-lg">
         Tic-Tac-Toe
       </h1>
 
-      <div className="grid grid-cols-3 gap-4 bg-zinc-300 dark:bg-zinc-800 p-5 rounded-xl shadow-lg">
+      {/* Board Container with 3D depth */}
+      <div className="grid grid-cols-3 gap-4 bg-zinc-300 dark:bg-zinc-800 p-6 rounded-2xl shadow-[0_10px_25px_rgba(0,0,0,0.25)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.6)] transform transition-all duration-300 hover:scale-[1.02]">
         {board.map((cell, index) => (
           <button
             key={index}
             onClick={() => handleClick(index)}
-            className={`w-24 h-24 flex items-center justify-center text-4xl font-bold rounded-lg border-2 transition-all duration-200 ${cell === "X"
-              ? "text-blue-600 dark:text-blue-400"
-              : "text-rose-600 dark:text-rose-400"
-              } ${winner
-                ? "cursor-not-allowed opacity-70"
-                : "hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:scale-105"
-              } border-zinc-500 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900`}
+            className={`
+              w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center 
+              text-4xl sm:text-5xl font-extrabold rounded-xl border-2 
+              transition-all duration-200 select-none
+
+              ${cell === "X"
+                ? "text-blue-600 dark:text-blue-400"
+                : "text-rose-600 dark:text-rose-400"
+              }
+
+              ${winner
+                ? "cursor-not-allowed opacity-60"
+                : "hover:bg-zinc-200 dark:hover:bg-zinc-700 hover:scale-110 active:scale-95"
+              }
+
+              ${winner && cell !== "" ? "animate-pulse" : ""}
+              bg-zinc-100 dark:bg-zinc-900 border-zinc-500 dark:border-zinc-700
+            `}
           >
             {cell}
           </button>
         ))}
       </div>
 
-      <div className="mt-6 text-2xl font-medium">
+      {/* Status Text */}
+      <div className="mt-8 text-3xl font-semibold">
         {winner
           ? winner === "Draw"
-            ? <span className="text-amber-600 dark:text-amber-400">It's a Draw!</span>
-            : <span className="text-green-600 dark:text-green-400">Winner: {winner}</span>
-          : <span>Next Player: <span className="font-bold text-blue-600 dark:text-blue-400">{isXNext ? "X" : "O"}</span></span>}
+            ? (
+              <span className="text-amber-600 dark:text-amber-400 animate-fade-in">
+                It's a Draw!
+              </span>
+            )
+            : (
+              <span className="text-green-600 dark:text-green-400 animate-fade-in">
+                Winner: {winner}
+              </span>
+            )
+          : (
+            <span>
+              Next Player:{" "}
+              <span className="font-bold text-blue-600 dark:text-blue-400">
+                {isXNext ? "X" : "O"}
+              </span>
+            </span>
+          )}
       </div>
 
+      {/* Reset Button */}
       <button
         onClick={resetGame}
-        className="mt-6 px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 active:scale-95 shadow-md transition-all duration-200"
+        className="mt-8 px-10 py-3 text-lg font-semibold 
+        bg-gradient-to-r from-blue-600 to-blue-700 
+        text-white rounded-xl shadow-lg 
+        hover:from-blue-700 hover:to-blue-800 
+        active:scale-95 transition-all duration-200"
       >
         Reset Game
       </button>
